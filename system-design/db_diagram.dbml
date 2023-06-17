@@ -1,0 +1,43 @@
+Table users {
+  id integer [primary key]
+  username varchar
+  email varchar
+  created_at timestamp
+}
+
+Table contents {
+  id integer [primary key]
+  content_id integer
+  title varchar
+  user_id integer
+  created_at timestamp
+  modified_at timestamp
+  feature_image_id integer
+  author_id integer
+  content text
+}
+
+
+Table comments {
+  id integer
+  content_id integer
+  comment varchar
+  created_at timestamp
+  modified_at timestamp
+  content text
+}
+
+Table tags {
+  id integer
+  content varchar
+}
+
+Table content_tags {
+  content_id integer
+  tag_id integer
+}
+
+Ref: contents.user_id > users.id // many-to-one
+Ref: comments.content_id > contents.id
+Ref: contents.id < content_tags.content_id
+Ref: tags.id < content_tags.tag_id
