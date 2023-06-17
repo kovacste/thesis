@@ -1,0 +1,46 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table users {
+  id integer [primary key]
+  username varchar
+  email varchar
+  created_at timestamp
+}
+
+Table posts {
+  id integer [primary key]
+  title varchar
+  content_id text
+  user_id integer
+  created_at timestamp
+  modified_at timestamp
+  feature_image_id integer
+  author_id integer
+}
+
+
+Table post_comments {
+  id integer
+  post_id integer
+  comment varchar
+  created_at timestamp
+  modified_at timestamp
+  content text
+}
+
+Table tags {
+  id integer
+  content varchar
+}
+
+Table post_tags {
+  post_id integer
+  tag_id integer
+}
+
+Ref: posts.user_id > users.id // many-to-one
+Ref: post_comments.post_id > posts.id
+Ref: posts.id < post_tags.post_id
+Ref: tags.id < post_tags.tags_id
