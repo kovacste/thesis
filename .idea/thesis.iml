@@ -4,6 +4,11 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/cms-backend/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/cms-backend/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cms-backend/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/cms-backend/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/cms-backend/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/cms-backend/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/cms-backend/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
@@ -116,6 +121,9 @@
       <excludeFolder url="file://$MODULE_DIR$/cms-backend/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/cms-backend/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/cms-backend/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/cms-backend/vendor/inertiajs/inertia-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/cms-backend/vendor/laravel/breeze" />
+      <excludeFolder url="file://$MODULE_DIR$/cms-backend/vendor/tightenco/ziggy" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

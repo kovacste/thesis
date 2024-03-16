@@ -121,9 +121,12 @@
       <path value="$PROJECT_DIR$/cms-backend/vendor/ramsey/collection" />
       <path value="$PROJECT_DIR$/cms-backend/vendor/ramsey/uuid" />
       <path value="$PROJECT_DIR$/cms-backend/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/cms-backend/vendor/laravel/breeze" />
+      <path value="$PROJECT_DIR$/cms-backend/vendor/inertiajs/inertia-laravel" />
+      <path value="$PROJECT_DIR$/cms-backend/vendor/tightenco/ziggy" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpStanOptionsConfiguration">
