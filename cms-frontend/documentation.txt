@@ -1,7 +1,0 @@
-npm npm create vuetify
-- vue: frontend keretrendszer a legfontosabb funkciókkal
- vuerouter: frontend frontenden routeolást megvalósít programcsomag
- vuetify: komponens könyvtár,
- eslint: statikus kód analízis,
-  pinia: állapot menedzsment,
-  typescript
