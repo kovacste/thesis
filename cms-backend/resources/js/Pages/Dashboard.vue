@@ -10,8 +10,7 @@ const admins = [
     ['Settings', 'mdi-cog-outline'],
 ];
 const contentTypes = [
-    ['Blog', 'mdi-plus-outline', '/editor/blog'],
-    ['Page', 'mdi-file-outline', '/page'],
+    ['Blog', 'mdi-plus-outline', '/editor'],
 ];
 </script>
 
@@ -31,19 +30,21 @@ const contentTypes = [
                         <v-list-item
                             v-bind="props"
                             prepend-icon="mdi-account-circle"
-                            title="Content"
+                            title="Tartalom"
+
                         ></v-list-item>
                     </template>
+
                     <v-list-item
-                        v-bind="props"
                         title="Minden tartalom"
+                        to="/contents"
                     ></v-list-item>
 
                     <v-list-group value="Új tartalom">
                         <template v-slot:activator="{ props }">
                             <v-list-item
                                 v-bind="props"
-                                title="Create"
+                                title="Új tartalom"
                             ></v-list-item>
                         </template>
 

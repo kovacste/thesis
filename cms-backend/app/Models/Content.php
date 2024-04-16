@@ -15,4 +15,9 @@ class Content extends Model
         'author_id',
         'title',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

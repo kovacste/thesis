@@ -9,7 +9,7 @@ import {ModificationType} from "@/modules/content/ModificationType";
 
 export class DifferentiatedContent {
 
-  private differentiatedContentArray: DifferentiatedContentBlock[] = [];
+  private differentiatedContentBlockArray: DifferentiatedContentBlock[] = [];
   private earlyContent: Content;
   private laterContent: Content;
 
@@ -20,7 +20,7 @@ export class DifferentiatedContent {
   }
 
   public getHtml(): string {
-    return this.differentiatedContentArray.map((block: DifferentiatedContentBlock) => {
+    return this.differentiatedContentBlockArray.map((block: DifferentiatedContentBlock) => {
       return `<${getContentBlockType(block)}>
                 ${block.data.text}
             </${getContentBlockType(block)}>`
@@ -43,35 +43,34 @@ export class DifferentiatedContent {
   }
 
   private createDifferentiatedContent() {
-
     let text: string;
     let differenceType: ModificationType;
 
+    // végig nézzük a korábbi kontent minden blokkját
     this.earlyContent.getContent().forEach((block) => {
 
+      // ha létezik azonos azonosítójú blokk a későbbi tartalomban
+      // akkor összehasonlítjuk a két blokk szövegét
+      // ha megegyezik, nem csinálunk vele semmit, ha nem akkor
+      // megkeressük a két szöveg között a különbséget és jelöljük
       if (this.laterContent.hasBlockWithSameId(block.id)) {
 
         const blockWithSameId = this.laterContent.getBlockById(block.id);
 
         if (block.data.text !== blockWithSameId.data.text) {
-
           text = this.getDifferenceText(block.data.text, blockWithSameId.data.text);
           differenceType = ModificationType.MODIFIED;
-
         } else {
-
           text = blockWithSameId.data.text;
           differenceType = ModificationType.SAME;
-
         }
       } else {
-
+        // ha nem létezik azonos azonosítójú blokk a későbbi tartalomban
+        // akkor a blokkot eltávolítottnak jelöljük
         text = ContentWrapper.wrapText(block.data.text, ModificationType.REMOVED)
         differenceType = ModificationType.REMOVED;
-
       }
-
-      this.differentiatedContentArray.push({
+      this.differentiatedContentBlockArray.push({
         id: block.id,
         type: block.type,
         differenceType,
@@ -82,9 +81,12 @@ export class DifferentiatedContent {
       });
     });
 
+    // végig nézzük a későbbi tartalom minden blokkját
+    // ha azonos azonosítójú blokk nem létezik a korábbi tartalomban
+    // akkor a blokkot hozzáadottnak jelöljük, ezzel más dolgunk már nincs
     this.laterContent.getContent().forEach((block) => {
       if (!this.earlyContent.hasBlockWithSameId(block.id)) {
-        this.differentiatedContentArray.push({
+        this.differentiatedContentBlockArray.push({
           id: block.id,
           type: block.type,
           differenceType: ModificationType.ADDED,

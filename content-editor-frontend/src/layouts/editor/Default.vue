@@ -48,7 +48,7 @@ import {EditorFactory} from "@/modules/editor/EditorFactory";
 let editor;
 const route = useRoute();
 const contentId = route.params.id;
-const contentService = ContentService.getInstance();
+const contentService = new ContentService();
 
 let content = {};
 let title = ref('');

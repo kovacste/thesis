@@ -10,3 +10,4 @@ Route::get('content/{id}/edit', [ContentController::class, 'edit']);
 Route::post('content/{id}', [ContentController::class, 'update']);
 Route::delete('content/{id}', [ContentController::class, 'destroy']);
 Route::get('content/history/{id}', [ContentController::class, 'history']);
+Route::get('content/content/{category_id?}/{author_id?}{search_term?}', [ContentController::class, 'searchContent']);

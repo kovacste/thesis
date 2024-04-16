@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
@@ -19,25 +20,15 @@ class CategoryController extends Controller
     {
         $category = new Category;
         $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->parent_id = $request->input('parent_id');
         $category->save();
         return response()->json([
             'message' => 'Category created successfully',
         ], 200);
     }
 
-    public function show($id): JsonResponse
-    {
-        $category = Category::find($id);
-        return response()->json($category);
-    }
-
-    public function edit($id): JsonResponse
-    {
-        $category = Category::find($id);
-        return response()->json($category);
-    }
-
-    public function delete($id): JsonResponse
+    public function delete($id)
     {
         $category = Category::find($id);
         $category->delete();
@@ -46,25 +37,21 @@ class CategoryController extends Controller
         ], 200);
     }
 
-    public function useCategory($id): JsonResponse
+    public function getTopLevelCategories()
     {
-        $category = Category::find($id);
-        $category->usage_count = $category->usage_count + 1;
-        $category->save();
-        return response()->json([
-            'message' => 'Category usage count updated successfully',
-        ], 200);
+        $categories = Category::whereNull('parent_id')->get();
+        return response()->json($categories);
     }
 
-    public function unUseCategory($id): JsonResponse
+    public function getChildCategories($id)
     {
-        $category = Category::find($id);
-        $category->usage_count = $category->usage_count - 1;
-        $category->save();
-        return response()->json([
-            'message' => 'Category usage count updated successfully',
-        ], 200);
+        $categories = Category::where('parent_id', $id)->get();
+        return response()->json($categories);
     }
 
-
+    public function allCategories()
+    {
+        $categories = Category::all();
+        return response()->json($categories);
+    }
 }

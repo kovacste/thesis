@@ -9,10 +9,11 @@ const dialog = ref(false);
 const props = defineProps({
   contentId: Number,
 });
+
 let contentHistory = reactive([])
 const loadHistory = () => {
-  const contentService = ContentService.getInstance();
-  contentService.getContentHistory(<number>props.contentId).then((data: []) => {
+  let service: ContentService = new ContentService();
+  service.getContentHistory(<number>props.contentId).then((data: []) => {
     loaded.value = true;
     contentHistory = data;
   });
@@ -101,3 +102,4 @@ const loadHistory = () => {
 <style scoped>
 
 </style>
+

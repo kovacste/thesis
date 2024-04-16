@@ -8,8 +8,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::middleware('auth')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
+    include_once 'content_api.php';
+    include_once 'category_api.php';
+    Route::post('image', [ImageController::class, 'storeImage']);
 //});
 
-include_once 'content_api.php';
-Route::post('image', [ImageController::class, 'storeImage']);
+

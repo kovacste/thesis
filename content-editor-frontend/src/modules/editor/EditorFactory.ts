@@ -1,10 +1,16 @@
 import EditorJS from "@editorjs/editorjs";
 
+// @ts-ignore
 import Header from '@editorjs/header';
+// @ts-ignore
 import List from '@editorjs/list';
+// @ts-ignore
 import ImageTool from '@editorjs/image';
+// @ts-ignore
 import LinkTool from '@editorjs/link';
+// @ts-ignore
 import Quote from '@editorjs/quote';
+// @ts-ignore
 import CheckList from '@editorjs/checklist';
 
 

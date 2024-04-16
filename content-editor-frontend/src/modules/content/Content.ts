@@ -6,7 +6,6 @@ export class Content {
 
   constructor(content: ContentBlock[]) {
     this.content = content;
-    console.log(this.content)
   }
 
   public getContent(): ContentBlock[] {
