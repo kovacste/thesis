@@ -20,7 +20,7 @@
 
             <v-list-item
               title="Minden tartalom"
-              to="/contents"
+              href="/contents"
             ></v-list-item>
 
             <v-list-group value="Új tartalom">
@@ -37,14 +37,13 @@
                 :value="title"
                 :title="title"
                 :prepend-icon="icon"
-                :to="to"
+                :href="to"
               ></v-list-item>
             </v-list-group>
           </v-list-group>
         </v-list>
       </v-navigation-drawer>
       <v-main>
-        <router-view />
       </v-main>
     </v-layout>
 </template>

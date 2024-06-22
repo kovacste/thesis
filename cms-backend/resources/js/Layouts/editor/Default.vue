@@ -1,15 +1,11 @@
 <template>
   <div class="editor-layout">
-    <div class="editor-toolbar">
-    </div>
     <v-row>
       <v-col cols="8" class="editor-preview">
         <h1 id="titleElement" contenteditable="true" v-text="title" class="title ma-5"> </h1>
         <div id="editorjs"></div>
       </v-col>
       <v-col cols="4" class="mt-5">
-
-
 
         <CategoryInput v-model="category" />
 
@@ -47,6 +43,8 @@ const route = useRoute();
 const contentId = ref(route.params.id);
 const contentService = new ContentService();
 
+console.log(route.params.id);
+
 const category = ref(null);
 
 let content = {};
@@ -71,7 +69,7 @@ if (contentId.value) {
 
 function saveContent() {
   title.value = document.getElementById('titleElement').innerText;
-  editor.save().then((outputData) => {
+    editor.save().then((outputData) => {
 
     contentService.saveContent(
       contentId.value,
@@ -86,9 +84,9 @@ function saveContent() {
     }).catch((error) => {
       console.log('Saving failed: ', error)
     });
-  }).catch((error) => {
+    }).catch((error) => {
     console.log('Saving failed: ', error)
-  });
+    });
 }
 
 

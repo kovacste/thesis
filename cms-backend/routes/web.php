@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Contents\ContentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,13 +34,19 @@ Route::get('/contents', function () {
     return Inertia::render('Contents');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/editor', [ContentController::class, 'edit']);
 });
-Route::get('/{any}', function () {
+
+
+/*Route::get('/{any}', function () {
     return Inertia::render('Dashboard');
 })->where('any', '.*')->middleware(['auth', 'verified']);
-
+*/
 require __DIR__.'/auth.php';

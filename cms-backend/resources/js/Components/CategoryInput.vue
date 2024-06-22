@@ -13,10 +13,8 @@ categoryService.getAllCategories().then((data) => {
     categories.value = data;
 })
 
-
 defineProps(['modelValue']);
 defineEmits(['update:modelValue'])
-
 
 const saveCategory = () => {
     categoryService.saveCategory({
@@ -32,20 +30,26 @@ const saveCategory = () => {
 </script>
 
 <template>
-    <v-select
-        :model-value="modelValue"
-        @update:modelValue="$emit('update:modelValue', $event)"
-        :items="categories"
-        item-title="name"
-        item-value="id"
-        label="Válassz kategóriát"
-        variant="solo"
-    ></v-select>
-    <v-btn @click="newCategoryDialogVisible = true">
-        Új kategória
-    </v-btn>
+    <v-row>
+        <v-col cols="8">
+            <v-select
+                :model-value="modelValue"
+                @update:modelValue="$emit('update:modelValue', $event)"
+                :items="categories"
+                item-title="name"
+                item-value="id"
+                label="Válassz kategóriát"
+                variant="solo"
+            ></v-select>
+        </v-col>
+        <v-col cols="4" class="mt-3">
+            <v-btn @click="newCategoryDialogVisible = true">
+                Új kategória
+            </v-btn>
+        </v-col>
+    </v-row>
     <v-dialog v-model="newCategoryDialogVisible">
-        <v-card>
+        <v-card max-width="500px">
             <v-card-title>
                 Új kategória
             </v-card-title>

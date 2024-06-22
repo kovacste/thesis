@@ -10,6 +10,7 @@ Table contents {
   content_id integer
   title varchar
   user_id integer
+  cagetory_id integer
   created_at timestamp
   modified_at timestamp
   feature_image_id integer
@@ -37,7 +38,16 @@ Table content_tags {
   tag_id integer
 }
 
+Table categories {
+  id integer [primary key]
+  name varchar
+  description varchar
+  parent_id integer
+}
+
 Ref: contents.user_id > users.id // many-to-one
 Ref: comments.content_id > contents.id
 Ref: contents.id < content_tags.content_id
 Ref: tags.id < content_tags.tag_id
+Ref: contents.cagetory_id > categories.id
+Ref: categories.id - categories.parent_id

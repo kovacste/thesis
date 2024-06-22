@@ -38,7 +38,7 @@ createInertiaApp({
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(Vuetify)
-            .use(router)
+            //.use(router)
             .use(ZiggyVue, Ziggy)
             .mount(el);
     },

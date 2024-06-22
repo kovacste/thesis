@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Content;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ContentController extends Controller
 {
@@ -108,6 +109,11 @@ class ContentController extends Controller
         return response()->json($contents);
     }
 
+
+    public function edit(Request $request)
+    {
+        return Inertia::render('Editor/Editor');
+    }
 
 
 
