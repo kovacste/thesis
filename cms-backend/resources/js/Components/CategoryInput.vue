@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {CategoryService} from "../services/CategoryService";
+import { notify } from "@kyvg/vue3-notification";
 
 const categoryService = new CategoryService();
 const categoryName = ref('');
@@ -19,18 +20,33 @@ defineEmits(['update:modelValue'])
 const saveCategory = () => {
     categoryService.saveCategory({
         name: categoryName.value,
-        parent: null,
+        parent: parentCategory.value,
         description: categoryDescription.value
-    }).then((data) => {
-        console.log('Saving successful: ', data)
-    }).catch((error) => {
-        console.log('Saving failed: ', error)
+    }).then(() => {
+        categories.value.push({
+            name: categoryName.value,
+            id: categories.value.length + 1
+        });
+        notify({
+            title: "Mentés sikeres!",
+            text: "A kategória mentése sikeresen megtörtént!",
+            duration: 1000,
+            type: "success"
+        });
+    }).catch(() => {
+        notify({
+            title: "Mentés sikertelen!",
+            text: "A kategória mentése sikertelen!",
+            duration: 1000,
+            type: "error"
+        });
     });
 }
+
 </script>
 
 <template>
-    <v-row>
+    <v-row dense>
         <v-col cols="8">
             <v-select
                 :model-value="modelValue"
@@ -38,7 +54,7 @@ const saveCategory = () => {
                 :items="categories"
                 item-title="name"
                 item-value="id"
-                label="Válassz kategóriát"
+                label="Kategória"
                 variant="solo"
             ></v-select>
         </v-col>

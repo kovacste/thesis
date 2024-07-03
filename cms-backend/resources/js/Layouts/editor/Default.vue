@@ -7,16 +7,9 @@
       </v-col>
       <v-col cols="4" class="mt-5">
 
-        <CategoryInput v-model="category" />
+      <CategoryInput v-model="category" />
 
-        <v-combobox
-          v-model="tag"
-          :items="items"
-          label="Válassz vagy írj be egy új címkéket"
-          multiple
-          chips
-          variant="solo"
-        ></v-combobox>
+      <TagInput v-model="tags" />
 
         <ContentHistory :content-id="contentId"/>
 
@@ -37,6 +30,7 @@ import ContentHistory from "@/components/ContentHistory.vue";
 import {ref} from "vue";
 import {EditorFactory} from "@/modules/editor/EditorFactory";
 import CategoryInput from "../../Components/CategoryInput.vue";
+import TagInput from "../../Components/TagInput.vue";
 
 let editor;
 const route = useRoute();
@@ -46,12 +40,10 @@ const contentService = new ContentService();
 console.log(route.params.id);
 
 const category = ref(null);
+const tags = ref(null);
 
 let content = {};
 const title = ref('');
-
-const tag = ref(['Vers', 'Irodalom']);
-const items = ref(['Vers', 'Irodalom', 'Ady Endre', 'Matematika', 'Történelem']);
 
 
 if (contentId.value) {
@@ -77,6 +69,7 @@ function saveContent() {
         content: JSON.stringify(outputData.blocks),
         title: title.value,
         category_id: category.value,
+          status: status.value,
       }
 
     ).then((data) => {

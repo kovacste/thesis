@@ -7,6 +7,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 import Navigation from "../Components/Navigation.vue";
+import {Notifications} from "@kyvg/vue3-notification";
 
 const showingNavigationDropdown = ref(false);
 
@@ -23,19 +24,9 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
+                                Content Management System
                             </div>
 
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
-                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -67,9 +58,9 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> Profil </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            Kijelentkezés
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -114,12 +105,6 @@ const showingNavigationDropdown = ref(false);
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
                     class="sm:hidden"
                 >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
-
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
@@ -147,12 +132,12 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <Navigation></Navigation>
-
             <!-- Page Content -->
-            <main>
+            <main style="margin-left:300px;">
                 <slot />
             </main>
         </div>
+        <notifications position="bottom right" />
     </div>
 </template>
 

@@ -42,3 +42,30 @@ img {
     height: auto;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
+
+.parent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#tags {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    height: fit-content;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.tag {
+    background-color: yellow;
+    margin-left: 5px;
+}
+
+#publishDate {
+    font-weight: lighter;
+}
+#title {
+    margin-bottom: -10px;
+}

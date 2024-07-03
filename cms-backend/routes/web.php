@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/editor', [ContentController::class, 'edit']);
+    Route::get('/editor/{id?}', [ContentController::class, 'edit']);
 });
 
 

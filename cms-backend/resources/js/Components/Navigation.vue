@@ -6,8 +6,6 @@
         width="300"
       >
         <v-list v-model:opened="open">
-          <v-list-item prepend-icon="mdi-home" title="Home"></v-list-item>
-
           <v-list-group value="Tartalmak">
             <template v-slot:activator="{ props }">
               <v-list-item
@@ -43,8 +41,6 @@
           </v-list-group>
         </v-list>
       </v-navigation-drawer>
-      <v-main>
-      </v-main>
     </v-layout>
 </template>
 

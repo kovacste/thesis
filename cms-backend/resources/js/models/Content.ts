@@ -6,5 +6,6 @@ export interface Content {
   updated_at: string;
   author_id: number;
   content_id: number;
+  status: number;
 }
 

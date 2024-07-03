@@ -10,7 +10,9 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { createVuetify } from "vuetify";
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import router from './router'
+
+import Notifications from '@kyvg/vue3-notification'
+
 
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -40,6 +42,7 @@ createInertiaApp({
             .use(Vuetify)
             //.use(router)
             .use(ZiggyVue, Ziggy)
+            .use(Notifications)
             .mount(el);
     },
     progress: {

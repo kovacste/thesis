@@ -12,6 +12,7 @@ class Content extends Model
         'title',
         'user_id',
         'content',
+        'status',
         'author_id',
         'title',
     ];

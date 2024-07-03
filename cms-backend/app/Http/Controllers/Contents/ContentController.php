@@ -14,11 +14,14 @@ class ContentController extends Controller
     public function index(): JsonResponse
     {
         $contents = Content::select('*')
+                ->where('status', '!=' , 2)
+                ->orWhereNull('status')
                 ->whereIn('id', function($query) {
                     $query->selectRaw('max(id)')
                         ->from('contents')
                         ->groupBy('content_id');
                 })->get();
+
         return response()->json($contents);
     }
 
@@ -28,12 +31,14 @@ class ContentController extends Controller
         $content->title = '';
         $content->user_id = 1;
         $content->author_id = 1;
-        $content->content_id = 1;
+        $content->content_id = 0;
+        $content->status = 0;
         $content->content = '';
 
         $content->save();
         $content->content_id = $content->id;
 
+        $content->tags = $request->input('tags');
         $content->category_id = $request->input('category_id');
         $content->content = $request->input('content');
         $content->title = $request->input('title');
@@ -57,20 +62,23 @@ class ContentController extends Controller
         $newContent->title = $request->input('title');
         $newContent->user_id = $content->user_id;
         $newContent->author_id = $content->author_id;
+        $newContent->status = $request->input('status');
         $newContent->content_id = $content->content_id;
+        $newContent->tags = $request->input('tags');
         $newContent->category_id = $request->input('category_id');
         $newContent->content = $request->input('content');
         $newContent->save();
 
         return response()->json([
             'message' => 'Content updated successfully',
+            'id' => $newContent->id,
         ], 200);
     }
 
     public function destroy($id)
     {
         $content = Content::find($id);
-        $content->delete();
+        $content->status = 2;
         return response()->json([
             'message' => 'Content deleted successfully',
         ], 200);
@@ -86,7 +94,9 @@ class ContentController extends Controller
     public function searchContent(
         $category_id = null,
         $author_id = null,
-        $search_term = null): JsonResponse
+        $search_term = null,
+        $tags = null
+    ): JsonResponse
     {
         $query = Content::select('*')
             ->whereIn('id', function($innerQuery) {
@@ -104,6 +114,11 @@ class ContentController extends Controller
         if ($search_term) {
             $query->where('content', 'like', '%' . $search_term . '%');
         }
+        /*if ($tags) {
+            $query->whereHas('tags', function($innerQuery) use ($tags) {
+                $innerQuery->whereIn('tag_id', $tags);
+            });
+        }*/
 
         $contents = $query->get();
         return response()->json($contents);
@@ -115,6 +130,26 @@ class ContentController extends Controller
         return Inertia::render('Editor/Editor');
     }
 
+    public function rollbackContentToVersion($oldId, $newId)
+    {
+       $newContent = Content::find($newId);
 
+        $content = new Content;
+
+        $content->user_id = $newContent->user_id;
+        $content->status = $newContent->status;
+        $content->author_id = $newContent->author_id;
+        $content->content_id = $newContent->content_id;
+        $content->tags = $newContent->tags;
+        $content->category_id = $newContent->category_id;
+        $content->content = $newContent->content;
+        $content->title = $newContent->title;
+        $content->save();
+
+        return response()->json([
+            'message' => 'Content rolled back successfully',
+            'id' => $content->id,
+        ], 200);
+    }
 
 }

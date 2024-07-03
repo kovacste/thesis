@@ -6,10 +6,14 @@ import {ContentService} from "../services/ContentService";
 import {Content} from "../modules/content/Content";
 import {ContentBlock} from "../modules/content/ContentBlock";
 import {DifferentiatedContent} from "../modules/content/DifferentiatedContent";
+import { notify } from "@kyvg/vue3-notification";
+
+const emit = defineEmits(['rollback']);
 
 const loaded = ref(false);
 const dialog = ref(false);
 const selectedIndex = ref(null);
+
 
 const props = defineProps({
   contentId: Number,
@@ -33,7 +37,6 @@ const loadHistory = () => {
     loaded.value = true;
     contentHistory = data;
     calculateDIfferences();
-    console.log(contentHistoryHtml);
   });
 }
 
@@ -59,14 +62,27 @@ const calculateDifference = () => {
     html = contentHistoryHtml[selectedIndex.value];
 }
 
+const rollbackVersion = () => {
+    const contentService = new ContentService();
+    contentService.rollbackContent(<number>props.contentId, contentHistory[selectedIndex.value].id).then((data) => {
+        emit('rollback', data.id);
+        loadHistory();
+        notify({
+            title: "Verzió visszaállítás sikeres!",
+            text: "A verzió visszaállítása sikeresen megtörtént!",
+            duration: 1000,
+            type: "success"
+        });
+    });
+}
+
 </script>
 
 <template>
   <v-row class="mt-5" justify="center">
     <v-dialog
       v-model="dialog"
-      fullscreen
-      :scrim="false"
+      width="1400"
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ props }">
@@ -98,47 +114,56 @@ const calculateDifference = () => {
           </v-toolbar-items>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-row>
-          <v-col v-if="loaded">
+        <v-row class="ma-5">
+          <v-col cols="7" v-if="loaded" class="pa-5 ml-20">
             <JsonRenderer
               :newVersion="newVersion()"
               :oldVersion="oldVersion()"
             />
               <div v-html="contentHistoryHtml[selectedIndex]" ></div>
           </v-col>
-          <v-col>
-            <v-list>
-
-
-              <v-list-item-group v-if="contentHistory.length > 0">
-                <v-list-item
-                  v-for="(item, index) in contentHistory"
-                  :key="item.id"
-                >
-                  <v-list-item-title>
-                      <v-checkbox
-                          :value="index"
-                          :label="dateFormatter(item.created_at)"
-                          v-model="selectedIndex"
-                          @change="calculateDifference()"
-                      >
-                    </v-checkbox>
-                  </v-list-item-title>
-                  <v-list-item-action>
-
-                  </v-list-item-action>
-                </v-list-item>
-              </v-list-item-group>
-              <v-alert
-                v-else
-                border="left"
-                colored-border
-                type="info"
-                elevation="2"
+          <v-col cols="4">
+              <v-card>
+                  <v-card-title>
+                      Verziók
+                    </v-card-title>
+              <v-virtual-scroll
+                  :height="300"
+                    :items="contentHistory"
               >
-                No history found
-              </v-alert>
-            </v-list>
+                  <template v-slot:default="{ item, index }">
+                      <div v-if="contentHistory.length > 0">
+                          <v-checkbox
+                              :key="item.id"
+                              density="compact"
+                              :value="index"
+                              :hide-details="true"
+                              :label="dateFormatter(item.created_at)"
+                              v-model="selectedIndex"
+                              @change="calculateDifference()"
+                          >
+                          </v-checkbox>
+                      </div>
+                      <v-alert
+                          v-else
+                          border="left"
+                          colored-border
+                          type="info"
+                          elevation="2"
+                      >
+                          No history found
+                      </v-alert>
+                  </template>
+              </v-virtual-scroll>
+                <v-card-actions>
+                    <v-btn
+                        color="primary"
+                        @click="rollbackVersion();"
+                    >
+                        Visszaállás a kiválasztott verzióra
+                    </v-btn>
+                </v-card-actions>
+              </v-card>
           </v-col>
         </v-row>
       </v-card>

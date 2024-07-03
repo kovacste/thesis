@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             parseContent(data.content, 'content');
+            document.getElementById('title').innerText = data.title;
+            data.tags.split(',').slice(0,-1).forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.innerText = tag;
+                tagElement.classList.add('tag');
+                document.getElementById('tags').appendChild(tagElement);
+            });
+            document.getElementById('publishDate').innerText = data.created_at.substring(0, 10);
         })
         .catch(error => console.error('Error:', error));
 });

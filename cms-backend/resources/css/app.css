@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.v-field__input input {
+    background-color: unset !important;
+}
+
+.v-field__input input:focus {
+    border-color: unset !important;
+    border: 0px !important;
+    --tw-ring-shadow: unset !important;
+}
+
